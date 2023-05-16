@@ -11,4 +11,3 @@ yargs.command({
     }
 })
 yargs.parse()
-console.log("hello world")
