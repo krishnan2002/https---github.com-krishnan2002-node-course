@@ -4,19 +4,36 @@ const getNotes =function(){
     return "Your notes..."
 }
 const addNote = function (title,body){
-    try{
-        const data=(fs.readFileSync(notes.json)).toString()
-    }catch(e){
-        data = []
-    }
-    data.push({
+    const notes=loadNotes()
+    notes.push({
         title: title,
         body: body
     })
-    fs.writeFileSync('notes.json',JSON.stringify(data))
+}
+const removeNote = function(title){
+    const notes=loadNotes() 
+    const notesToKeep=notes.filter(function(note){
+        return note.title !== title 
+    })
+    saveNotes(notesToKeep)
+}
 
+const saveNotes = function(notes){
+    const dataJSON = JSON.stringify(notes)
+    fs.writeFileSync('notes.json',dataJSON)
+}
+
+const loadNotes= function(){
+    try{
+        const dataBuffer=fs.readFileSync('notes.json')
+        const dataJSON = dataBuffer.toString()
+        return JSON.parse(dataJSON)
+    }catch (e){
+        return []
+    }
 }
 module.exports={
     getNotes:getNotes,
-    addNote:addNote
+    addNote:addNote,
+    removeNote:removeNote
 } 

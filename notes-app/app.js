@@ -10,6 +10,13 @@ yargs.command({
         notes.addNote(argv.title,argv.body)
     }
 })
+yargs.command({
+    command: 'remove',
+    handler: function(argv){ 
+        notes.removeNote(argv.title)
+
+    }
+})
 yargs.parse()
 
 
